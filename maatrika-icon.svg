@@ -1,0 +1,59 @@
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconBgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c5aa0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a5f;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="iconGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="60" height="60" rx="10" ry="10" fill="url(#iconBgGradient)"/>
+  
+  <!-- Hexagonal icons around M -->
+  
+  <!-- Top -->
+  <g transform="translate(30, 12)">
+    <polygon points="0,-6 5,-3 5,3 0,6 -5,3 -5,-3" fill="none" stroke="white" stroke-width="1"/>
+    <!-- Bar chart icon -->
+    <rect x="-3" y="-1" width="1" height="2" fill="white"/>
+    <rect x="-2" y="-2" width="1" height="3" fill="white"/>
+    <rect x="-1" y="-1" width="1" height="2" fill="white"/>
+    <rect x="0" y="-2" width="1" height="3" fill="white"/>
+  </g>
+  
+  <!-- Left -->
+  <g transform="translate(12, 30)">
+    <polygon points="0,-6 5,-3 5,3 0,6 -5,3 -5,-3" fill="none" stroke="white" stroke-width="1"/>
+    <!-- People icon -->
+    <circle cx="-1" cy="-1" r="1" fill="white"/>
+    <circle cx="1" cy="-1" r="1" fill="white"/>
+    <circle cx="0" cy="-1" r="1" fill="white"/>
+    <path d="M-2,0 Q-2,2 -1,2 Q0,2 0,2 Q1,2 1,2 Q2,2 2,0" fill="white"/>
+  </g>
+  
+  <!-- Right -->
+  <g transform="translate(48, 30)">
+    <polygon points="0,-6 5,-3 5,3 0,6 -5,3 -5,-3" fill="none" stroke="white" stroke-width="1"/>
+    <!-- Dollar sign icon -->
+    <text x="0" y="1" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="white">$</text>
+  </g>
+  
+  <!-- Bottom -->
+  <g transform="translate(30, 48)">
+    <polygon points="0,-6 5,-3 5,3 0,6 -5,3 -5,-3" fill="none" stroke="white" stroke-width="1"/>
+    <!-- Pie chart icon -->
+    <circle cx="0" cy="0" r="3" fill="none" stroke="white" stroke-width="0.5"/>
+    <path d="M0,0 L3,0 A3,3 0 0,1 1.5,2.6 Z" fill="white"/>
+  </g>
+  
+  <!-- Main "M" text -->
+  <text x="30" y="35" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white" filter="url(#iconGlow)">M</text>
+</svg>

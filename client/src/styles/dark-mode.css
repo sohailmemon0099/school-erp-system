@@ -1,0 +1,193 @@
+/* Dark Mode Styles for School ERP */
+
+/* Global dark mode variables */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --border-color: #374151;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Base dark mode styles */
+.dark body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Buttons */
+.dark .btn-primary {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.dark .btn-primary:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.dark .btn-secondary {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark .btn-secondary:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Tables */
+.dark table {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dark th {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark td {
+  border-color: var(--border-color);
+}
+
+.dark tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Modals */
+.dark .modal {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+.dark .modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.dark .modal-footer {
+  border-top-color: var(--border-color);
+}
+
+/* Cards */
+.dark .card {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+/* Navigation */
+.dark .nav-link {
+  color: var(--text-secondary);
+}
+
+.dark .nav-link:hover,
+.dark .nav-link.active {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+/* Dropdowns */
+.dark .dropdown-menu {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+.dark .dropdown-item {
+  color: var(--text-primary);
+}
+
+.dark .dropdown-item:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Alerts */
+.dark .alert {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark .alert-success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.2);
+  color: #10b981;
+}
+
+.dark .alert-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.dark .alert-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.dark .alert-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+/* Charts */
+.dark .chart-container {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+/* Loading states */
+.dark .loading-spinner {
+  border-color: var(--border-color);
+  border-top-color: #3b82f6;
+}
+
+/* Scrollbars */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}

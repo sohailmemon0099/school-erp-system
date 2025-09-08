@@ -1,0 +1,110 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c5aa0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a5f;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" rx="20" ry="20" fill="url(#bgGradient)"/>
+  
+  <!-- Hexagonal icons around Maatrika -->
+  
+  <!-- Top row -->
+  <g transform="translate(50, 30)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Bar chart icon -->
+    <rect x="-8" y="-3" width="2" height="6" fill="white"/>
+    <rect x="-5" y="-5" width="2" height="8" fill="white"/>
+    <rect x="-2" y="-2" width="2" height="4" fill="white"/>
+    <rect x="1" y="-6" width="2" height="9" fill="white"/>
+  </g>
+  
+  <g transform="translate(100, 30)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Clock icon -->
+    <circle cx="0" cy="0" r="6" fill="none" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="-4" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="0" x2="3" y2="0" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <g transform="translate(150, 30)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Gears icon -->
+    <circle cx="-3" cy="-3" r="3" fill="none" stroke="white" stroke-width="1"/>
+    <circle cx="3" cy="3" r="3" fill="none" stroke="white" stroke-width="1"/>
+    <circle cx="0" cy="0" r="1" fill="white"/>
+  </g>
+  
+  <!-- Left side -->
+  <g transform="translate(30, 70)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- People icon -->
+    <circle cx="-4" cy="-2" r="2" fill="white"/>
+    <circle cx="4" cy="-2" r="2" fill="white"/>
+    <circle cx="0" cy="-2" r="2" fill="white"/>
+    <path d="M-6,0 Q-6,4 -3,4 Q0,4 0,4 Q3,4 3,4 Q6,4 6,0" fill="white"/>
+  </g>
+  
+  <g transform="translate(30, 120)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Gears icon -->
+    <circle cx="-3" cy="-3" r="3" fill="none" stroke="white" stroke-width="1"/>
+    <circle cx="3" cy="3" r="3" fill="none" stroke="white" stroke-width="1"/>
+    <circle cx="0" cy="0" r="1" fill="white"/>
+  </g>
+  
+  <!-- Right side -->
+  <g transform="translate(170, 70)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Circular arrow icon -->
+    <path d="M-6,-6 A6,6 0 1,1 6,6" fill="none" stroke="white" stroke-width="1"/>
+    <path d="M4,6 L6,6 L6,4" fill="none" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <g transform="translate(170, 120)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Dollar sign icon -->
+    <text x="0" y="2" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">$</text>
+  </g>
+  
+  <!-- Bottom row -->
+  <g transform="translate(50, 160)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Pie chart icon -->
+    <circle cx="0" cy="0" r="6" fill="none" stroke="white" stroke-width="1"/>
+    <path d="M0,0 L6,0 A6,6 0 0,1 3,5.2 Z" fill="white"/>
+  </g>
+  
+  <g transform="translate(100, 160)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Bar chart icon -->
+    <rect x="-8" y="-3" width="2" height="6" fill="white"/>
+    <rect x="-5" y="-5" width="2" height="8" fill="white"/>
+    <rect x="-2" y="-2" width="2" height="4" fill="white"/>
+    <rect x="1" y="-6" width="2" height="9" fill="white"/>
+  </g>
+  
+  <g transform="translate(150, 160)">
+    <polygon points="0,-15 13,-7.5 13,7.5 0,15 -13,7.5 -13,-7.5" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Arrow up/down icon -->
+    <path d="M0,-6 L-3,-3 L3,-3 Z" fill="white"/>
+    <path d="M0,6 L-3,3 L3,3 Z" fill="white"/>
+    <line x1="0" y1="-3" x2="0" y2="3" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <!-- Main "Maatrika" text -->
+  <text x="100" y="105" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="white" filter="url(#glow)">Maatrika</text>
+  
+  <!-- Tagline -->
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="10" font-style="italic" text-anchor="middle" fill="rgba(255,255,255,0.8)">ERP Solutions</text>
+</svg>
