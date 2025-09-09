@@ -48,7 +48,7 @@ const Library = () => {
     bookId: '',
     studentId: '',
     dueDate: '',
-    issuedBy: user?.id || ''
+    issuedBy: ''
   });
 
   useEffect(() => {
@@ -180,7 +180,7 @@ const Library = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          returnedBy: user?.id,
+          returnedBy: user?.id || '',
           condition: 'good',
           notes: 'Book returned in good condition'
         })

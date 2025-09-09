@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Frontend Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Frontend Authentication Fix</h1>
+        <p>This tool will help fix the inquiry loading issue by clearing authentication data and testing the API connection.</p>
+        
+        <div class="info">
+            <strong>Current Status:</strong>
+            <div id="status">Checking...</div>
+        </div>
+        
+        <div>
+            <button class="button" onclick="clearAuth()">🗑️ Clear Authentication Data</button>
+            <button class="button" onclick="testAPI()">🔍 Test API Connection</button>
+            <button class="button" onclick="loginAndTest()">🔑 Login & Test Inquiries</button>
+            <button class="button" onclick="openApp()">🚀 Open School ERP</button>
+        </div>
+        
+        <div id="results"></div>
+        
+        <h3>📋 Instructions:</h3>
+        <ol>
+            <li>Click "Clear Authentication Data" to remove old tokens</li>
+            <li>Click "Login & Test Inquiries" to verify API works</li>
+            <li>Click "Open School ERP" to go to the application</li>
+            <li>Login with: <strong>admin@school.com</strong> / <strong>admin123</strong></li>
+            <li>Navigate to Inquiries page</li>
+        </ol>
+    </div>
+
+    <script>
+        function showResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+
+        function clearAuth() {
+            try {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                sessionStorage.clear();
+                showResult('✅ Authentication data cleared successfully!', 'success');
+                updateStatus();
+            } catch (error) {
+                showResult('❌ Error clearing auth data: ' + error.message, 'error');
+            }
+        }
+
+        function updateStatus() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            const status = document.getElementById('status');
+            
+            if (token && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    status.innerHTML = `✅ Logged in as: ${userData.firstName} ${userData.lastName} (${userData.role})`;
+                } catch (e) {
+                    status.innerHTML = '⚠️ Token present but user data corrupted';
+                }
+            } else {
+                status.innerHTML = '❌ Not logged in';
+            }
+        }
+
+        async function testAPI() {
+            try {
+                showResult('🔍 Testing API connection...', 'info');
+                
+                const response = await fetch('http://localhost:5000/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('✅ Backend API is running: ' + data.message, 'success');
+                } else {
+                    showResult('❌ Backend API error: ' + data.message, 'error');
+                }
+            } catch (error) {
+                showResult('❌ Cannot connect to backend API: ' + error.message, 'error');
+            }
+        }
+
+        async function loginAndTest() {
+            try {
+                showResult('🔑 Logging in...', 'info');
+                
+                const loginResponse = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@school.com',
+                        password: 'admin123'
+                    })
+                });
+                
+                const loginData = await loginResponse.json();
+                
+                if (loginResponse.ok) {
+                    const token = loginData.data.token;
+                    const user = loginData.data.user;
+                    
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('user', JSON.stringify(user));
+                    
+                    showResult('✅ Login successful!', 'success');
+                    updateStatus();
+                    
+                    // Test inquiries API
+                    showResult('🔍 Testing inquiries API...', 'info');
+                    
+                    const inquiriesResponse = await fetch('http://localhost:5000/api/inquiries', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    const inquiriesData = await inquiriesResponse.json();
+                    
+                    if (inquiriesResponse.ok) {
+                        showResult(`✅ Inquiries API working! Found ${inquiriesData.data.inquiries.length} inquiries`, 'success');
+                        showResult(`<pre>${JSON.stringify(inquiriesData.data.inquiries, null, 2)}</pre>`, 'info');
+                    } else {
+                        showResult('❌ Inquiries API error: ' + inquiriesData.message, 'error');
+                    }
+                } else {
+                    showResult('❌ Login failed: ' + loginData.message, 'error');
+                }
+            } catch (error) {
+                showResult('❌ Login error: ' + error.message, 'error');
+            }
+        }
+
+        function openApp() {
+            window.open('http://localhost:3000', '_blank');
+        }
+
+        // Initialize
+        updateStatus();
+    </script>
+</body>
+</html>

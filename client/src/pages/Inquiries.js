@@ -57,14 +57,23 @@ const Inquiries = () => {
   const loadInquiries = useCallback(async () => {
     try {
       setLoading(true);
+      console.log('🔍 Inquiries Component: Starting to load inquiries...');
+      console.log('🔍 Inquiries Component: Search term:', searchTerm);
+      console.log('🔍 Inquiries Component: Status filter:', statusFilter);
+      
       const params = {};
       if (searchTerm) params.search = searchTerm;
       if (statusFilter) params.status = statusFilter;
       
+      console.log('🔍 Inquiries Component: API params:', params);
       const response = await inquiryService.getInquiries(params);
-      setInquiries(response.data.inquiries || []);
+      console.log('✅ Inquiries Component: API response:', response);
+      
+      const inquiriesData = response.data.inquiries || [];
+      console.log('📊 Inquiries Component: Setting inquiries:', inquiriesData.length, 'items');
+      setInquiries(inquiriesData);
     } catch (error) {
-      console.error('Error loading inquiries:', error);
+      console.error('❌ Inquiries Component: Error loading inquiries:', error);
       toast.error('Failed to load inquiries');
     } finally {
       setLoading(false);

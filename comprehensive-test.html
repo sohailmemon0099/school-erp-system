@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive System Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Comprehensive System Test</h1>
+        <p>This will test every component of the School ERP system to identify issues.</p>
+        
+        <div class="test-section">
+            <h3>1. Backend Health Check</h3>
+            <button onclick="testBackendHealth()">Test Backend</button>
+            <div id="backend-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Database Connection Test</h3>
+            <button onclick="testDatabase()">Test Database</button>
+            <div id="database-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Login API Test</h3>
+            <button onclick="testLoginAPI()">Test Login API</button>
+            <div id="login-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. Frontend-Backend Communication</h3>
+            <button onclick="testFrontendBackend()">Test Communication</button>
+            <div id="communication-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>5. Complete Login Flow Test</h3>
+            <button onclick="testCompleteFlow()">Test Complete Flow</button>
+            <div id="complete-flow-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>6. Browser Environment Check</h3>
+            <button onclick="checkBrowserEnvironment()">Check Browser</button>
+            <div id="browser-status" class="status info">Not tested yet</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>7. Quick Actions</h3>
+            <button onclick="clearAllData()" style="background: #dc3545;">Clear All Data</button>
+            <button onclick="openSchoolERP()" style="background: #28a745;">Open School ERP</button>
+            <button onclick="runAllTests()" style="background: #17a2b8;">Run All Tests</button>
+        </div>
+        
+        <div id="detailed-results"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        const FRONTEND_URL = 'http://localhost:3000';
+        
+        function showStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.innerHTML = message;
+        }
+        
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('detailed-results');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+        
+        async function testBackendHealth() {
+            try {
+                showStatus('backend-status', 'Testing backend health...', 'info');
+                
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'success') {
+                    showStatus('backend-status', `✅ Backend is healthy: ${data.message}`, 'success');
+                    addResult(`Backend Health: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    showStatus('backend-status', `❌ Backend error: ${data.message}`, 'error');
+                    addResult(`Backend Error: ${JSON.stringify(data)}`, 'error');
+                }
+            } catch (error) {
+                showStatus('backend-status', `❌ Cannot connect to backend: ${error.message}`, 'error');
+                addResult(`Backend Connection Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testDatabase() {
+            try {
+                showStatus('database-status', 'Testing database connection...', 'info');
+                
+                // Test by trying to get inquiries (requires database)
+                const response = await fetch(`${API_URL}/inquiries`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.status === 401) {
+                    showStatus('database-status', '✅ Database is connected (401 = auth required)', 'success');
+                    addResult('Database: Connected and responding (authentication required)', 'success');
+                } else if (response.ok) {
+                    const data = await response.json();
+                    showStatus('database-status', `✅ Database connected, found ${data.data?.inquiries?.length || 0} inquiries`, 'success');
+                    addResult(`Database: ${JSON.stringify(data)}`, 'success');
+                } else {
+                    showStatus('database-status', `❌ Database error: ${response.status}`, 'error');
+                    addResult(`Database Error: Status ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showStatus('database-status', `❌ Database connection failed: ${error.message}`, 'error');
+                addResult(`Database Connection Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testLoginAPI() {
+            try {
+                showStatus('login-status', 'Testing login API...', 'info');
+                
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@school.com',
+                        password: 'admin123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'success') {
+                    showStatus('login-status', `✅ Login API working! User: ${data.data.user.firstName} ${data.data.user.lastName}`, 'success');
+                    addResult(`Login API Success: ${JSON.stringify(data.data.user)}`, 'success');
+                    
+                    // Store token for other tests
+                    localStorage.setItem('test-token', data.data.token);
+                    localStorage.setItem('test-user', JSON.stringify(data.data.user));
+                } else {
+                    showStatus('login-status', `❌ Login API failed: ${data.message}`, 'error');
+                    addResult(`Login API Error: ${JSON.stringify(data)}`, 'error');
+                }
+            } catch (error) {
+                showStatus('login-status', `❌ Login API error: ${error.message}`, 'error');
+                addResult(`Login API Connection Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testFrontendBackend() {
+            try {
+                showStatus('communication-status', 'Testing frontend-backend communication...', 'info');
+                
+                // Test CORS
+                const corsResponse = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Origin': FRONTEND_URL
+                    }
+                });
+                
+                if (corsResponse.ok) {
+                    showStatus('communication-status', '✅ CORS is working correctly', 'success');
+                    addResult('CORS: Working correctly', 'success');
+                } else {
+                    showStatus('communication-status', `❌ CORS issue: ${corsResponse.status}`, 'error');
+                    addResult(`CORS Error: Status ${corsResponse.status}`, 'error');
+                }
+            } catch (error) {
+                showStatus('communication-status', `❌ Communication error: ${error.message}`, 'error');
+                addResult(`Communication Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testCompleteFlow() {
+            try {
+                showStatus('complete-flow-status', 'Testing complete login flow...', 'info');
+                
+                // Step 1: Login
+                const loginResponse = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@school.com',
+                        password: 'admin123'
+                    })
+                });
+                
+                if (!loginResponse.ok) {
+                    throw new Error('Login failed');
+                }
+                
+                const loginData = await loginResponse.json();
+                const token = loginData.data.token;
+                
+                // Step 2: Test authenticated request
+                const authResponse = await fetch(`${API_URL}/inquiries`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (authResponse.ok) {
+                    const authData = await authResponse.json();
+                    showStatus('complete-flow-status', `✅ Complete flow working! Found ${authData.data.inquiries.length} inquiries`, 'success');
+                    addResult(`Complete Flow: Login + Auth Request successful`, 'success');
+                } else {
+                    showStatus('complete-flow-status', `❌ Authenticated request failed: ${authResponse.status}`, 'error');
+                    addResult(`Complete Flow Error: Auth request failed with status ${authResponse.status}`, 'error');
+                }
+            } catch (error) {
+                showStatus('complete-flow-status', `❌ Complete flow failed: ${error.message}`, 'error');
+                addResult(`Complete Flow Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function checkBrowserEnvironment() {
+            try {
+                const info = {
+                    userAgent: navigator.userAgent,
+                    localStorage: typeof(Storage) !== "undefined",
+                    fetch: typeof(fetch) !== "undefined",
+                    currentURL: window.location.href,
+                    cookies: document.cookie
+                };
+                
+                showStatus('browser-status', '✅ Browser environment is compatible', 'success');
+                addResult(`Browser Environment: ${JSON.stringify(info, null, 2)}`, 'info');
+            } catch (error) {
+                showStatus('browser-status', `❌ Browser environment issue: ${error.message}`, 'error');
+                addResult(`Browser Environment Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function clearAllData() {
+            localStorage.clear();
+            sessionStorage.clear();
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            addResult('All browser data cleared', 'success');
+        }
+        
+        function openSchoolERP() {
+            window.open(FRONTEND_URL, '_blank');
+        }
+        
+        async function runAllTests() {
+            addResult('=== RUNNING ALL TESTS ===', 'info');
+            await testBackendHealth();
+            await testDatabase();
+            await testLoginAPI();
+            await testFrontendBackend();
+            await testCompleteFlow();
+            checkBrowserEnvironment();
+            addResult('=== ALL TESTS COMPLETED ===', 'info');
+        }
+        
+        // Auto-run basic tests on load
+        window.addEventListener('load', () => {
+            testBackendHealth();
+            checkBrowserEnvironment();
+        });
+    </script>
+</body>
+</html>

@@ -3,8 +3,19 @@ import api from './api';
 const inquiryService = {
   // Get all inquiries
   getInquiries: async (params = {}) => {
-    const response = await api.get('/inquiries', { params });
-    return response.data;
+    console.log('🔍 InquiryService: Fetching inquiries with params:', params);
+    console.log('🔍 InquiryService: API base URL:', api.defaults.baseURL);
+    console.log('🔍 InquiryService: Auth token present:', !!localStorage.getItem('token'));
+    
+    try {
+      const response = await api.get('/inquiries', { params });
+      console.log('✅ InquiryService: Successfully fetched inquiries:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ InquiryService: Error fetching inquiries:', error);
+      console.error('❌ InquiryService: Error response:', error.response?.data);
+      throw error;
+    }
   },
 
   // Get single inquiry
